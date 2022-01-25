@@ -4,7 +4,9 @@ This service is responsible for managing profiles (CRUD operations)
 
 ****** For my reference ******
 
-After creating a new profile, the notification-service can called using two methods.
+Import profile-service and notification-service into STS
+
+After creating a new profile, the notification-service can be called using two methods.
 
 1. RestTemplate
 2. Apache Kafka
