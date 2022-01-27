@@ -23,5 +23,8 @@ zookeeper-server-start.bat ../../config/zookeeper.properties<br/><br/>
 c. Start Kafka server<br/>
 kafka-server-start.bat ../../config/server.properties<br/><br/>
 d. Create a topic - NOTIFICATION_TOPIC<br/>
-kafka-topics.bat --zookeeper localhost:2181 --create --topic TOPIC_NAME --partitions 1 --replication-factor 1<br/><br/>
-e. Start both projects and perform CRUD operations using Postman
+kafka-topics.bat --zookeeper localhost:2181 --create --topic NOTIFICATION_TOPIC --partitions 1 --replication-factor 1<br/><br/>
+e. Start both projects and perform CRUD operations using Postman<br/><br/>
+f. Check records in MySQL using below queries<br>
+SELECT * FROM profile;<br>
+SELECT * FROM notification;
