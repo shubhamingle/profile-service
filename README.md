@@ -1,29 +1,24 @@
 # profile-service
 
-This service is responsible for managing profiles (CRUD operations)
+This service is responsible for managing profiles (CRUD operations). Also, notification-service is called from profile-service after creating a new profile.
 
-****** For my reference ******
-
-Import profile-service and notification-service into STS
-
-After creating a new profile, the notification-service can be called using two methods.
-
-1. RestTemplate
-2. Apache Kafka
-
-profile-service runs on port 8080 and notification-service runs on port 8081.
+notification-service can be called using two methods.<br/><br/>
 
 1. RestTemplate:
 
-a. Remove comments for RestTemplate in ProfileController.java file and comment Kafka part. <br/>
-b. Run both projects.<br/>
-c. While posting records for profile you will get an SQL error since the GenerationType is set to IDENTITY. To resolve that open MySQL CLI. Use jiodb. Execute the following command<br/>
-ALTER TABLE notification CHANGE id id INT(5) AUTO_INCREMENT;<br/>
-d. Now post a new profile, new notification will be generated. (Check db)<br/>
-
+![profile-service-resttemplate-flow](https://user-images.githubusercontent.com/37982804/151371457-3f04d393-f54c-4357-a900-f3b419b04150.jpg)
+<br/>
+a. Uncomment RestTemplate in POST method in ProfileController.java file and comment the Kafka part <br/><br/>
+b. Run both projects (profile-service runs on port 8080 and notification-service runs on port 8081) <br/><br/>
+c. Perform CRUD operations using Postman <br/><br/>
 
 2. Apache Kafka
 
-a. comment out the RestTemplate part and uncomment kafka part<br/>
-b. Start Zookeeper, then kafka-server and create a new topic - NOTIFICATION_TOPIC<br/>
-c. Start both the projects and create a new profile.<br/>
+a. Comment out the RestTemplate part and uncomment kafka part<br/><br/>
+b. Start Zookeeper using below command<br/>
+zookeeper-server-start.bat ../../config/zookeeper.properties<br/><br/>
+c. Start Kafka server<br/>
+kafka-server-start.bat ../../config/server.properties<br/><br/>
+d. Create a topic - NOTIFICATION_TOPIC<br/>
+kafka-topics.bat --zookeeper localhost:2181 --create --topic TOPIC_NAME --partitions 1 --replication-factor 1<br/><br/>
+e. Start both projects and perform CRUD operations using Postman
