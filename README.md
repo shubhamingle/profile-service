@@ -6,8 +6,7 @@ notification-service can be called using two methods.<br/><br/>
 
 1. RestTemplate:<br/><br/>
 ![profile-service-resttemplate-flow](https://user-images.githubusercontent.com/37982804/151371457-3f04d393-f54c-4357-a900-f3b419b04150.jpg)
-<br/>
-a. Uncomment RestTemplate in POST method in ProfileController.java file and comment the Kafka part <br/><br/>
+<br/><br/>a. Uncomment RestTemplate in POST method in ProfileController.java file and comment the Kafka part <br/><br/>
 b. Run both projects (profile-service runs on port 8080 and notification-service runs on port 8081) <br/><br/>
 c. Perform CRUD operations using Postman <br/><br/>
 d. Example:<br/>
