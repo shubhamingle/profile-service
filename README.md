@@ -17,7 +17,8 @@ iv. Update a profile - PUT http://localhost:8080/api/profiles/1 along with Reque
 v. Delete a profile - DELETE http://localhost:8080/api/profiles/1<br/><br/>
 
 2. Apache Kafka<br/><br/>
-a. Comment out the RestTemplate part and uncomment kafka part<br/><br/>
+![profile-service-kafka](https://user-images.githubusercontent.com/37982804/151407953-3e14f135-f525-401c-9ca9-3e4725ff0b1a.jpg)
+<br/><br/>a. Comment out the RestTemplate part and uncomment kafka part<br/><br/>
 b. Start Zookeeper using below command<br/>
 zookeeper-server-start.bat ../../config/zookeeper.properties<br/><br/>
 c. Start Kafka server<br/>
