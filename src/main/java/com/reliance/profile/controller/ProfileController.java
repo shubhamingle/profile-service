@@ -24,8 +24,6 @@ import com.reliance.profile.service.ProfileService;
 @RequestMapping("/api")
 public class ProfileController {
 
-	// Profile service
-
 	@Autowired
 	private ProfileService profileService;
 
@@ -53,75 +51,49 @@ public class ProfileController {
 	@PostMapping("/profiles")
 	public Profile createProfile(@RequestBody Profile profile) {
 		Profile newProfile = profileService.createProfile(profile);
-
-//		/*
-//		 * Synchronous call to notification-service using RestTemplate. Task - Create a
-//		 * new notification when a new profile is created
-//		 */
-//
-//		// Create an HTTP header and set the content type of the body (JSON)
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_JSON);
-//
-//		String url = "http://localhost:8081/api/notifications";
 		String message = "Profile created for " + newProfile.getName();
-//
-//		JSONObject notificationObj = new JSONObject();
-//		notificationObj.put("message", message);
-//
-//		// Create a payload (header + body) using HttpEntity
-//		HttpEntity<String> s = new HttpEntity<String>(notificationObj.toString(), headers);
-//
-//		// Send request to the URL
-//		restTemplate.postForObject(url, s, String.class);
 
+		// For RestTemplate
+		// restTemplateHelper(newProfile);
+
+		// For Apache Kafka
 		kafkaProducer.send(message);
 
 		return newProfile;
 	}
 
-	// ***** PUT *****
+	// ***** PUT (Update profile) *****
 	@PutMapping("/profiles/{id}")
 	public Profile updateProfile(@PathVariable("id") Integer id, @RequestBody Profile profile) {
 		return profileService.updateProfile(id, profile);
 	}
 
-	// ***** DELETE *****
+	// ***** DELETE profile*****
 	@DeleteMapping("/profiles/{id}")
 	public void deleteProfile(@PathVariable("id") Integer id) {
 		profileService.deleteProfile(id);
 	}
 
-//	// Notification Service
-//
-//	@Autowired
-//	private NotificationService notificationService;
-//
-//	@GetMapping("/notifications")
-//	public List<Notification> getNotifications() {
-//		List<Notification> notifications = notificationService.getNotifications();
-//		return notifications;
-//	}
-//
-//	@GetMapping("/notifications/{id}")
-//	public Notification getNotification(@PathVariable("id") Integer id) {
-//		Notification notification = notificationService.getNotification(id);
-//		return notification;
-//	}
-//
-//	@PostMapping("/notifications")
-//	public Notification postNotification(@RequestBody Notification notification) {
-//		return notificationService.createNotification(notification);
-//	}
-//
-//	@PutMapping("/notifications/{id}")
-//	public Notification updateNotification(@PathVariable("id") Integer id, @RequestBody Notification notification) {
-//		return notificationService.updateNotification(id, notification);
-//	}
-//
-//	@DeleteMapping("/notifications/{id}")
-//	public void deleteNotification(@PathVariable("id") Integer id) {
-//		notificationService.deleteNotification(id);
-//	}
+	public void restTemplateHelper(Profile profile) {
+		/*
+		 * Synchronous call to notification-service using RestTemplate. Task - Create a
+		 * new notification when a new profile is created
+		 */
 
+		// Create an HTTP header and set the content type of the body (JSON)
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		String url = "http://localhost:8081/api/notifications";
+		String message = "Profile created for " + profile.getName();
+
+		JSONObject notificationObj = new JSONObject();
+		notificationObj.put("message", message);
+
+		// Create a payload (header + body) using HttpEntity
+		HttpEntity<String> s = new HttpEntity<String>(notificationObj.toString(), headers);
+
+		// Send request to the URL
+		restTemplate.postForObject(url, s, String.class);
+	}
 }
